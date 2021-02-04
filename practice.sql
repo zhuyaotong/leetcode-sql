@@ -1,4 +1,4 @@
-# leetcode-database 第182题
+# leetcode-database 第182题-查找重复的电子邮箱：
 select Email, count(Email) as num from Person group by Email;
 
 # 方法一：
@@ -19,7 +19,7 @@ group by Email having count(Email) > 1;
 
 ##########################################################
 
-# leetcode-database 第176题
+# leetcode-database 第176题-第二高的薪水：
 # 方法一：
 SELECT
 (SELECT DISTINCT Salary FROM Employee
@@ -42,7 +42,7 @@ from Employee where Salary < (select max(Salary) from Employee);
 
 ##########################################################
 
-# leetcode-database 第1179题
+# leetcode-database 第1179题-重新格式化部门表：
 SELECT id,
 SUM(CASE `month` WHEN 'Jan' THEN revenue END) Jan_Revenue,
 SUM(CASE `month` WHEN 'Feb' THEN revenue END) Feb_Revenue,
@@ -60,7 +60,7 @@ FROM Department GROUP BY id;
 
 ##########################################################
 
-# leetcode-database 第596题
+# leetcode-database 第596题-超过五门学生的课：
 # 方法一：
 SELECT class FROM
 (SELECT class, COUNT(DISTINCT student) AS num
@@ -74,13 +74,13 @@ GROUP BY class HAVING COUNT(DISTINCT student) >= 5;
 
 ##########################################################
 
-# leetcode-database 第175题
+# leetcode-database 第175题-组合两个表：
 select FirstName,LastName, City, State
 from Person left join Address on Person.PersonId = Address.PersonId;
 
 ##########################################################
 
-# leetcode-database 第627题
+# leetcode-database 第627题-变更性别：
 UPDATE salary
 SET sex =
 CASE sex
@@ -90,7 +90,7 @@ END;
 
 ##########################################################
 
-# leetcode-database 第595题
+# leetcode-database 第595题-大的国家：
 SELECT name, population, area FROM world WHERE area > 3000000;
 SELECT name, population, area FROM world WHERE population > 25000000;
 # 使用OR将两个子查询合并在一起
@@ -104,3 +104,30 @@ UNION
 SELECT name, population, area FROM world WHERE population > 25000000;
 
 # 注：方法二比方法一运行速度更快，但是它们没有太大差别。
+
+# leetcode-database 第197题-上升的温度：
+# 方法一：
+SELECT weather.id AS 'Id' FROM
+weather JOIN weather w ON DATEDIFF(weather.recordDate, w.recordDate) = 1
+AND weather.Temperature > w.Temperature;
+
+# 方法二：
+SELECT w2.id FROM
+Weather w1, Weather w2 WHERE DATEDIFF(w2.recordDate, w1.recordDate) = 1
+AND w1.Temperature < w2.Temperature;
+
+##########################################################
+
+# leetcode-database 第196题-删除重复的电子邮箱：
+DELETE p1 FROM Person p1, Person p2
+WHERE p1.Email = p2.Email AND p1.Id > p2.Id;
+
+##########################################################
+
+# leetcode-database 第183题-从不订购的客户：
+select customers.name as 'Customers' from customers
+where customers.id not in (select customerid from orders);
+
+##########################################################
+
+
